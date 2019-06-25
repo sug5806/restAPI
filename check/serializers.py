@@ -1,13 +1,13 @@
 from rest_framework import serializers
-from .models import Student, Test, cls
+from .models import Student
 
 class StudentSerializer(serializers.ModelSerializer):
-    test = serializers.RelatedField(many=True)
+    # test = serializers.RelatedField(many=True)
 
     class Meta:
         model = Student
         fields = '__all__'
-        # depth = 1
+        depth = 1
 
 #
 # class StudentTp(serializers.ModelSerializer):
