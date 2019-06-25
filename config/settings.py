@@ -38,10 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'check',
-    'datetimepicker',
     'rest_framework',
     'rest_framework_swagger',
     'django_extensions',
+    'psycopg2',
 ]
 
 MIDDLEWARE = [
@@ -80,10 +80,16 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'apidb',
+        'USER': 'sug5806',
+        'PASSWORD': 'ghd941322',
+        'HOST': 'api.cogtgjaek1ah.ap-northeast-2.rds.amazonaws.com',
+        'PORT': '5432',
     }
 }
+
+# AUTH_USER_MODEL = 'check.cls'
 
 
 # Password validation
@@ -103,6 +109,25 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+# Amazon S3 settings
+AWS_REGION = 'ap-northeast-2'
+AWS_STORAGE_BUCKET_NAME = 's-api'
+AWS_S3_CUSTOM_DOMAIN = 's3.%s.amazonaws.com/%s' % (AWS_REGION, AWS_STORAGE_BUCKET_NAME)
+AWS_S3_SECURE_URLS = False
+
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+
+AWS_DEFAULT_ACL = 'public-read'
+AWS_LOCATION = 'static'
+
+
+STATIC_URL = 'http://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
 # Internationalization

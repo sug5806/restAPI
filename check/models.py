@@ -21,7 +21,7 @@ class Test(models.Model):
 class Student(models.Model):
     name = models.CharField(max_length=20)
     cls_t = models.ForeignKey(cls, on_delete=models.SET_NULL, related_name='type', null=True)
-    test = models.ManyToManyField(Test, related_name='test')
+    test = models.ManyToManyField(Test, related_name='test', blank=True)
     date = models.DateField('my_date')
 
     def __str__(self):
