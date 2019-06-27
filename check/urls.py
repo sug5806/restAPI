@@ -7,7 +7,6 @@ app_name = 'student'
 urlpatterns = [
     path('', Student_list.as_view(), name='list'),
     path('create/', Student_Create.as_view(), name='create'),
-    path('list/', Studentlist.as_view()),
     path('create/student/', StudentCreate.as_view()),
     path('create/name/', NameCreate.as_view()),
     path('admin/create/', UserCreateAPI.as_view(), name='user_create'),

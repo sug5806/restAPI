@@ -54,15 +54,12 @@ class StudentDetail(generics.RetrieveAPIView):
     serializer_class = studentDetailSerializer
     lookup_field = 'name'
 
-    def list(self, request, *args, **kwargs):
+    def retrieve(self, request, *args, **kwargs):
 
-        print(kwargs['name'])
-
-        queryset = student.objects.filter(name=kwargs['name'])
+        queryset = student.objects.filter(name__name=kwargs['name'])
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
-
 
 
 class Studentlist(generics.ListAPIView):
