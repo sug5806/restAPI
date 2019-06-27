@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'x&32j$0qv&la5z(q(!x9-mrwedbsa=gs8bn9w7$1srk=z8ud!6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     'django_extensions',
     'psycopg2',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -74,22 +75,32 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES':(
+#         'rest_framework.permissions.IsAuthenticated',
+#
+#     )
+# }
+#
+# AUTHENTICATION_BACKENDS = (
+#
+# 	'django.contrib.auth.backends.ModelBackend',
+#
+# )
+
+
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'apidb',
-        'USER': 'sug5806',
-        'PASSWORD': 'ghd941322',
-        'HOST': 'api.cogtgjaek1ah.ap-northeast-2.rds.amazonaws.com',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
-# AUTH_USER_MODEL = 'check.cls'
+AUTH_USER_MODEL = 'check.manager'
 
 
 # Password validation
@@ -111,31 +122,14 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Amazon S3 settings
-AWS_REGION = 'ap-northeast-2'
-AWS_STORAGE_BUCKET_NAME = 's-api'
-AWS_S3_CUSTOM_DOMAIN = 's3.%s.amazonaws.com/%s' % (AWS_REGION, AWS_STORAGE_BUCKET_NAME)
-AWS_S3_SECURE_URLS = False
-
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
-
-AWS_DEFAULT_ACL = 'public-read'
-AWS_LOCATION = 'static'
-
-
-STATIC_URL = 'http://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
-
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ko'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
@@ -148,3 +142,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

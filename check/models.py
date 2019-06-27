@@ -1,31 +1,40 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
-# Create your models here.
-from django.urls import reverse_lazy
-
-
-class cls(models.Model):
-    cls_type = models.CharField(max_length=10)
+class cls_type(models.Model):
+    cls = models.CharField(max_length=10)
 
     def __str__(self):
-        return self.cls_type
+        return self.cls
 
 
-class Test(models.Model):
-    test_name = models.CharField(max_length=100, blank=True)
-
-    def __str__(self):
-        return self.test_name
-
-
-class Student(models.Model):
+class name(models.Model):
     name = models.CharField(max_length=20)
-    cls_t = models.ForeignKey(cls, on_delete=models.SET_NULL, related_name='type', null=True)
-    test = models.ManyToManyField(Test, related_name='test', blank=True)
-    date = models.DateField('my_date')
 
     def __str__(self):
-        return self.name + " "
+        return self.name
 
-    def get_absolute_url(self):
-        return reverse_lazy('student:list')
+
+class image(models.Model):
+    img = models.ImageField(upload_to='images/%Y/%m/%d')
+
+    def __str__(self):
+        return self.img
+
+
+class student(models.Model):
+    name = models.ForeignKey(name, on_delete=models.CASCADE, related_name='std_name')
+    cls = models.ForeignKey(cls_type, on_delete=models.SET_NULL, null=True, related_name='std_cls')
+    img = models.ForeignKey(image, on_delete=models.SET_NULL, null=True, blank=True)
+    date = models.CharField(max_length=50)
+    attend = models.CharField(max_length=10)
+
+    def __str__(self):
+        return str(self.id) + " " + str(self.name) + " " + str(self.cls) + " " + str(self.img) + " " + self.attend
+
+
+class manager(AbstractUser):
+    cls = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.username + " " + str(self.cls)

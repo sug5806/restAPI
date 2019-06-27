@@ -22,6 +22,6 @@ schema_view = get_swagger_view(title="Student API")
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('check.urls')),
-    path('api/', schema_view),
+    path('api/doc/', schema_view),
 
 ]
